@@ -1,0 +1,11 @@
+rect=zeros(51);
+rect(25:35,25:35)=ones(11);
+surf(rect);
+surf(abs(fft2(rect)));
+surf(abs(fftshift(rect)));
+surf(abs(fftshift(fft2(fftshift(rect)))));
+rect1=zeros(201);
+h=fspecial('disk',10);
+rect1(90:110,90:110)=40000*h;
+surf(abs(rect1));
+surf(abs(fftshift(fft2(fftshift(rect1)))));
