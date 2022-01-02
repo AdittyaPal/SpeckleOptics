@@ -35,7 +35,7 @@ output_image_mixed = imageio.imread('image_mixed.jpeg', as_gray=True)
 fourier_transform_output_mixed = fft.fft2(output_image_mixed)
 delta_phi_mixed=np.angle(fourier_transform)-np.angle(fourier_transform_output_mixed)
 
-output_image_mixed_ = imageio.imread('image_mixed1_1.jpeg', as_gray=True)
+output_image_mixed_ = imageio.imread('image_mixed3.jpeg', as_gray=True)
 fourier_transform_output_mixed_ = fft.fft2(output_image_mixed_)
 delta_phi_mixed_=np.angle(fourier_transform)-np.angle(fourier_transform_output_mixed_)
 
@@ -68,5 +68,5 @@ surf_mixed_ = axs[1].plot_surface(X, Y, delta_phi_mixed_, cmap=cm.nipy_spectral,
 axs[1].set_xlabel('Pixels')
 axs[1].set_ylabel('Pixels')
 axs[1].set_zlabel('$\Delta \Phi (in rd)$', rotation = 90)
-axs[1].title.set_text('12 CHIOA/HIOA(1,49) + 160 CHIOA')
+axs[1].title.set_text('9 CHIOA/HIOA/MHIOA*(1,84,5) + 190 CHIOA')
 plt.show()

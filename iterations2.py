@@ -75,7 +75,7 @@ guess_ = fourier_transform * np.exp(1j*2*np.pi*np.random.rand(*padded_image.shap
 prev = None
 #number of iterations
 steps = 1000
-cycle = np.arange(20, 121, 10)
+iterations = np.array([1, 5, 10, 20, 30, 40, 50, 60, 70, 80])
 #step size parameter
 beta = 0.8
 alpha = 0.6
@@ -83,18 +83,18 @@ eta = 0.9
 
 #sum squared error
 step=np.arange(0, steps, 2)
-sse=np.zeros((cycle.shape[0], steps//2))
+sse=np.zeros((iterations.shape[0], steps//2))
 
-for i in range(0, cycle.shape[0], 1):
+for i in range(0, iterations.shape[0], 1):
     #initial guess using random phase info
     guess = guess_
     #previous result
     prev = None
 
     for j in range(0,steps):
-        if(j%cycle[i]==0 or j>800):
+        if(j%90==0 or j>810):
             guess, prev=chioa(guess, prev, mask, alpha, beta)
-        elif(j<800 and j%cycle[i]>=(cycle[i]-10)):
+        elif(j<810 and j%90>=(90-iterations[i])):
             guess, prev=raara(guess, prev, mask, eta)
             #eta=eta+(1-eta)*(1-np.exp(-np.square((i-600)/100)))
         else:
@@ -103,17 +103,15 @@ for i in range(0, cycle.shape[0], 1):
             sse[i][j//2]=calculateSSE(guess)
     print(i)
 
-print("MHIOACHIOA/HIOA done")
-
 fig, ax = plt.subplots()
-cmap=['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:cyan', 'lime', 'blue', 'dodgerblue', 'black', 'green']
-for i in range(0, cycle.shape[0], 1):
-    ax.plot(step, sse[i,:], color=cmap[i], linewidth=0.6, label=f'(1, {cycle[i]-11}, 10)')
-ax.set(xlabel='Number of Iterations', ylabel='SSE in dB', title='SSE values using CHIOA/HIOA/MHIOA with different cycle lengths')
+cmap=['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:cyan', 'lime', 'lawngreen', 'blue', 'dodgerblue']
+for i in range(0, iterations.shape[0], 1):
+    ax.plot(step, sse[i,:], color=cmap[i], linewidth=0.6, label=f'(1, {90-iterations[i]-1}, {iterations[i]})')
+ax.set(xlabel='Number of Iterations', ylabel='SSE in dB', title='SSE values using CHIOA/HIOA/MHIOA with different number of iteartions of MHIOA')
 ax.legend()
 plt.show()
 
 fig, ax = plt.subplots()
-ax.plot(cycle, sse[:,-1], color='red', linewidth=0.5)
-ax.set(xlabel='Number of Iterations in a cycle (K)', ylabel='SSE in dB', title='SSE values using CHIOA/HIOA/MHIOA varying the number of iterations in each cycle')
+ax.plot(iterations, sse[:,-1], color='red', linewidth=0.5)
+ax.set(xlabel='Number of Iterations of MHIOA (k)', ylabel='SSE in dB', title='SSE values using CHIOA/HIOA/MHIOA varying the number of iterations of MHIOA')
 plt.show()

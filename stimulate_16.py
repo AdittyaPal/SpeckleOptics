@@ -182,7 +182,7 @@ prev = None
 sse_mixed1=np.zeros(steps//2)
 
 for i in range(0,steps):
-    if(i%50==0 or i>600):
+    if(i%70==0 or i>840):
         guess, prev=chioa(guess, prev, mask, alpha, beta)
     else:
         guess, prev=hioa(guess, prev, mask, beta)
@@ -213,7 +213,7 @@ for i in range(0,steps):
 
 imageio.imwrite('image_mixed2.jpeg', prev)
 print("CHIOA/HIOA + ERA done")
-'''
+
 #initial guess using random phase info
 guess = guess_
 #previous result
@@ -235,7 +235,7 @@ for i in range(0,steps):
 
 imageio.imwrite('image_mixed2.jpeg', prev)
 print("MHIOACHIOA/HIOA done")
-
+'''
 #initial guess using random phase info
 guess = guess_
 #previous result
@@ -244,9 +244,9 @@ prev = None
 sse_mixed3=np.zeros(steps//2)
 
 for i in range(0,steps):
-{}    if(i%50==0 or i>600):
+    if(i%90==0 or i>810):
         guess, prev=chioa(guess, prev, mask, alpha, beta)
-    elif(i<600 and i%50>=40):
+    elif(i<600 and i%90>=85):
         guess, prev=raara(guess, prev, mask, eta)
         eta=eta+(1-eta)*(1-np.exp(-np.square((i-600)/100)))
     else:
@@ -258,16 +258,17 @@ for i in range(0,steps):
 imageio.imwrite('image_mixed3.jpeg', prev)
 print("MHIOACHIOA/HIOA done")
 
+
 fig, ax = plt.subplots()
 #ax.plot(step, sse_hioa, color='blue', linewidth=0.5, label='(a): HIOA')
 #ax.plot(step, sse_raara, color='green', linewidth=0.5, label='(a): RAARA')
 #ax.plot(step, sse_chioa, color='green', linewidth=0.5, label='(a): CHIOA')
 #ax.plot(step, sse_er, color='black', linewidth=0.5, label='(b): ERA')
 ax.plot(step, sse_mixed, color='red', linewidth=0.5, label='(a): 12 ER/HIOA(1,49) + 400 ERA')
-ax.plot(step, sse_mixed1, color='blue', linewidth=0.5, label='(b):12 CHIOA/HIOA(1,49) + 400 CHIOA')
-ax.plot(step, sse_mixed2, color='green', linewidth=0.5, label='(c): 12 CHIOA/HIOA/MHIOA(1,39,10) + 400 CHIOA')
-ax.plot(step, sse_mixed3, color='black', linewidth=0.5, label='(d): 12 CHIOA/HIOA/MHIOA*(1,39,10) + 400 CHIOA')
-ax.set(xlabel='Number of Iterations', ylabel=r'SSE in dB', title='SSE values using: (a) 12 ER/HIOA(1,49)+400 ERA, (b) 12 CHIOA/HIOA(1,49)+400 CHIOA, (c) 12 CHIOA/HIOA/MHIOA(1,39,10)+400 CHIOA, (d) 12 CHIOA/HIOA/MHIOA*(1,39,10)+400 CHIOA ')
+ax.plot(step, sse_mixed1, color='blue', linewidth=0.5, label='(b):12 CHIOA/HIOA(1,69) + 160 CHIOA')
+#ax.plot(step, sse_mixed2, color='green', linewidth=0.5, label='(c): 12 CHIOA/HIOA/MHIOA(1,39,10) + 400 CHIOA')
+ax.plot(step, sse_mixed3, color='green', linewidth=0.5, label='(c): 9 CHIOA/HIOA/MHIOA*(1,84,5) + 190 CHIOA')
+ax.set(xlabel='Number of Iterations', ylabel=r'SSE in dB', title='SSE values using: (a) 12 ER/HIOA(1,49)+400 ERA, (b) 12 CHIOA/HIOA(1,69)+160 CHIOA, (c) 9 CHIOA/HIOA/MHIOA*(1,84,5)+190 CHIOA ')
 ax.legend()
 plt.show()
 
